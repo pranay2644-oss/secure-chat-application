@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>Secure Chat | Dashboard</title>
+
+<link rel="stylesheet" href="/ui/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="dashboard-page">
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+    <div class="sidebar">
+
+        <!-- PROFILE -->
+        <div class="profile">
+
+            <div class="avatar">👤</div>
+
+            <div class="profile-info">
+                <span class="name" id="loggedUser">Welcome</span>
+                <span class="status online">● Online</span>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">Logout</button>
+
+        </div>
+
+
+        <!-- SEARCH -->
+        <div class="search-box">
+            <input
+                class="search"
+                type="text"
+                placeholder="Search users..."
+                onkeyup="filterUsers(this.value)"
+            />
+        </div>
+
+
+        <!-- USERS -->
+        <ul class="user-list" id="users"></ul>
+
+    </div>
+
+
+
+    <!-- ================= CHAT AREA ================= -->
+    <div class="main" id="chatArea">
+
+        <!-- CHAT HEADER -->
+        <div class="chat-header">
+
+            <div class="chat-user-info">
+
+                <div class="chat-avatar">👤</div>
+
+                <div>
+                    <span id="chatUsername">Select a user to start chatting</span>
+                    <div id="chatPresence" class="chat-presence"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= MESSAGES ================= -->
+        <div class="chat-messages" id="messages">
+
+            <!-- Messages will be injected here -->
+
+        </div>
+
+
+
+        <!-- ================= MESSAGE INPUT ================= -->
+        <div class="chat-input">
+
+            <!-- FILE INPUT -->
+            <input type="file" id="fileInput" hidden />
+
+            <!-- FILE BUTTON -->
+            <button
+                class="file-btn"
+                onclick="document.getElementById('fileInput').click()"
+            >
+                📎
+            </button>
+
+
+            <!-- TEXT INPUT -->
+            <input
+                type="text"
+                id="messageInput"
+                placeholder="Type a secure message..."
+                onkeypress="handleEnter(event)"
+                autocomplete="off"
+            />
+
+
+            <!-- SEND BUTTON -->
+            <button
+                class="send-btn"
+                onclick="sendMessage()"
+            >
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= REAL-TIME LIBRARIES ================= -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+
+
+<!-- ================= APPLICATION LOGIC ================= -->
+<script src="/ui/app.js"></script>
+<script src="/ui/file-upload.js"></script>
+
+</body>
+</html>
