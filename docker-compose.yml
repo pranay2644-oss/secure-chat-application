@@ -1,0 +1,46 @@
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: secure-chat-mysql
+
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: secure_chat_db
+      MYSQL_ROOT_HOST: "%"
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    image: secure-chat-app
+    container_name: secure-chat-app
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/secure_chat_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      JWT_SECRET: be6df5c69f72c6aacfbbd1b4722dafa4aaf397c2003899a0025bd1c54c3e749d
+
+volumes:
+  mysql-data:
