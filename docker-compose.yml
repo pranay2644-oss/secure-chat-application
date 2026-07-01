@@ -24,6 +24,7 @@ services:
       retries: 10
 
   app:
+    build: .
     image: secure-chat-app
     container_name: secure-chat-app
 
